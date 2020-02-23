@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars</title>
+</head>
+
+<body>
+
+<form th:action="@{/resetDB}" method="get">
+    <input type="submit" value="RESET TABLE" class="button">
+</form>
+
+<h3>Actual Car List</h3>
+<form>
+    <table  style="border: 1px solid #AAAAAA; width: 500px;
+    padding: 3px 4px;">
+        <thead>
+        <tr style="text-align: left; width: 25%">
+            <th scope="col">ID</th>
+            <th scope="col">Mark</th>
+            <th scope="col">Model</th>
+            <th scope="col">Color</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car: ${allCars}">
+            <td th:text="${car.getIdCar()}"></td>
+            <td th:text="${car.getMark()}"></td>
+            <td th:text="${car.getModel()}"></td>
+            <td th:text="${car.getColor()}"></td>
+            <td>
+                <button>
+                    <a style="text-decoration:none; color:black" type="button" th:href="@{|/modifyCar/${car.idCar}|}">Edit</a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<br>
+<h3>Add Car</h3>
+<form th:action="@{/addCar}" th:object="${car}" method="post">
+    Id: <input type="number" th:field="*{idCar}"> <br>
+    Mark: <input type="text" th:field="*{mark}"><br>
+    Model: <input type="text" th:field="*{model}"><br>
+    Color: <input type="text" th:field="*{color}"><br><br>
+    <input type="submit" value="Add new Car"><br>
+</form>
+<br>
+<h3>Delete Car</h3>
+<form th:action="@{/deleteCar}" th:object="${car}" method="post">
+    Id: <input type="number" th:field="${car.idCar}"><br><br>
+    <input type="submit" value="Remove Selected Car"><br>
+</form>
+<br>
+<h3>Find Car by Id</h3>
+<form method="post" th:action="@{/findCarById}" th:object="${car}">
+    Id: <input type="number" th:field="${car.idCar}"><br><br>
+    <input type="submit" value="Find Car"><br>
+</form>
+<br>
+<h3>Find Cars by Color</h3>
+<form method="post" th:action="@{/findCarByColor}" th:object="${car}">
+    Color: <input type="text" th:field="${car.color}"><br><br>
+    <input type="submit" value="Find Car"><br>
+</form>
+<br>
+<h3>Update Car</h3>
+<form method="post" th:action="@{/modifyCar}" th:object="${car}">
+    Id: <input type="number" th:field="${car.idCar}"><br>
+    Mark: <input type="text" th:field="${car.mark}"><br>
+    Model: <input type="text" th:field="${car.model}"><br>
+    Color: <input type="text" th:field="${car.color}"><br><br>
+    <input type="submit" value="Update Car"><br>
+</form>
+
+
+<br>
+</body>
+</html>
